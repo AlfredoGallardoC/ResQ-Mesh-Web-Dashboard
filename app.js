@@ -5,9 +5,9 @@ const INITIAL_ZOOM = 14;
 // Inicializar el mapa de Leaflet
 const map = L.map('map').setView(INITIAL_COORDS, INITIAL_ZOOM);
 
-// Servidor de Mapas Gratis y Sin API Key (Esri World Topo Map)
+// Servidor de Mapas Esri (Gratuito y sin API Key)
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), swisstopo, MapmyIndia, &copy; OpenStreetMap contributors',
+  attribution: 'Tiles &copy; Esri &mdash; OpenStreetMap contributors',
   maxZoom: 18
 }).addTo(map);
 
@@ -45,11 +45,11 @@ function renderAlerts(alerts) {
     `;
 
     if (markers[id]) {
-      // Criterio 3: Actualizar posición/popup dinámicamente sin recargar
+      // Criterio 3: Actualización reactiva sin recargar la página
       markers[id].setLatLng([lat, lng]);
       markers[id].getPopup().setContent(popupContent);
     } else {
-      // Crear marcador por código de color
+      // Crear marcador inicial
       const marker = L.circleMarker([lat, lng], {
         radius: 11,
         fillColor: color,
@@ -65,47 +65,40 @@ function renderAlerts(alerts) {
   });
 }
 
-// Tramas de prueba locales para evitar bloqueos de CORS al abrir directamente index.html
-const defaultAlerts = [
-  {
-    "id": "NODE-001",
-    "lat": 31.8625,
-    "lng": -116.6264,
-    "urgencia": "critico",
-    "bateria": 20,
-    "timestamp": "2026-10-06 23:30:00"
-  },
-  {
-    "id": "NODE-002",
-    "lat": 31.8655,
-    "lng": -116.6210,
-    "urgencia": "atrapado",
-    "bateria": 65,
-    "timestamp": "2026-10-06 23:28:15"
-  },
-  {
-    "id": "NODE-003",
-    "lat": 31.8590,
-    "lng": -116.6300,
-    "urgencia": "general",
-    "bateria": 90,
-    "timestamp": "2026-10-06 23:25:00"
-  }
-];
+// SIMULACIÓN EN TIEMPO REAL CONTINUA
+function updateRealtimeData() {
+  const simData = [
+    {
+      "id": "NODE-001",
+      "lat": 31.8625 + (Math.random() - 0.5) * 0.0015,
+      "lng": -116.6264 + (Math.random() - 0.5) * 0.0015,
+      "urgencia": "critico",
+      "bateria": Math.floor(15 + Math.random() * 10),
+      "timestamp": new Date().toLocaleTimeString()
+    },
+    {
+      "id": "NODE-002",
+      "lat": 31.8655 + (Math.random() - 0.5) * 0.0015,
+      "lng": -116.6210 + (Math.random() - 0.5) * 0.0015,
+      "urgencia": "atrapado",
+      "bateria": 65,
+      "timestamp": new Date().toLocaleTimeString()
+    },
+    {
+      "id": "NODE-003",
+      "lat": 31.8590 + (Math.random() - 0.5) * 0.0015,
+      "lng": -116.6300 + (Math.random() - 0.5) * 0.0015,
+      "urgencia": "general",
+      "bateria": 90,
+      "timestamp": new Date().toLocaleTimeString()
+    }
+  ];
 
-// Cargar tramas JSON de prueba (con fallback local)
-async function fetchAlerts() {
-  try {
-    const response = await fetch('mock_data.json');
-    if (!response.ok) throw new Error('CORS o archivo no encontrado');
-    const data = await response.json();
-    renderAlerts(data);
-  } catch (error) {
-    // Si se abre directo con file:///, usa las tramas predeterminadas
-    renderAlerts(defaultAlerts);
-  }
+  renderAlerts(simData);
 }
 
-// Carga inicial y refresco dinámico
-fetchAlerts();
-setInterval(fetchAlerts, 5000);
+// Carga inicial
+updateRealtimeData();
+
+// Actualiza las posiciones y datos automáticamente cada 3 segundos
+setInterval(updateRealtimeData, 3000);
