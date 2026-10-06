@@ -1,0 +1,125 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #121824;
+  color: #ffffff;
+}
+
+.header {
+  height: 60px;
+  background: #1a2234;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 2px solid #2e3c56;
+}
+
+.logo span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00d2ff;
+}
+
+.logo small {
+  margin-left: 10px;
+  color: #a0aec0;
+  font-size: 0.85rem;
+}
+
+.status-badge {
+  background: rgba(0, 230, 118, 0.1);
+  color: #00e676;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-badge .dot {
+  width: 8px;
+  height: 8px;
+  background-color: #00e676;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00e676;
+}
+
+.main-container {
+  position: relative;
+  flex: 1;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.legend {
+  position: absolute;
+  bottom: 25px;
+  right: 20px;
+  background: rgba(26, 34, 52, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  z-index: 1000;
+  border: 1px solid #2e3c56;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.legend h4 {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: #cbd5e0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+}
+
+.color-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.critico { background-color: #ff3b30; }
+.atrapado { background-color: #ff9500; }
+.general { background-color: #ffcc00; }
+
+.leaflet-popup-content-wrapper {
+  background: #1a2234;
+  color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #2e3c56;
+}
+
+.leaflet-popup-tip {
+  background: #1a2234;
+}
+
+.popup-container h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #00d2ff;
+}
+
+.popup-container p {
+  font-size: 0.85rem;
+  margin: 4px 0;
+  color: #cbd5e0;
+}

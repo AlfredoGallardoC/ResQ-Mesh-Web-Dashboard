@@ -1,0 +1,26 @@
+[
+  {
+    "id": "NODE-001",
+    "lat": 31.8625,
+    "lng": -116.6264,
+    "urgencia": "critico",
+    "bateria": 20,
+    "timestamp": "2026-10-06 23:30:00"
+  },
+  {
+    "id": "NODE-002",
+    "lat": 31.8655,
+    "lng": -116.6210,
+    "urgencia": "atrapado",
+    "bateria": 65,
+    "timestamp": "2026-10-06 23:28:15"
+  },
+  {
+    "id": "NODE-003",
+    "lat": 31.8590,
+    "lng": -116.6300,
+    "urgencia": "general",
+    "bateria": 90,
+    "timestamp": "2026-10-06 23:25:00"
+  }
+]

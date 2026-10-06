@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResQ-Mesh | Dashboard Web GIS</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Encabezado del Centro de Mando -->
+  <header class="header">
+    <div class="logo">
+      <span>🛡️ ResQ-Mesh</span>
+      <small>Centro de Mando - Protección Civil</small>
+    </div>
+    <div class="status-badge">
+      <span class="dot"></span> Tiempo Real Activo
+    </div>
+  </header>
+
+  <!-- Contenedor Principal del Mapa -->
+  <main class="main-container">
+    <div id="map"></div>
+
+    <!-- Leyenda de Colores de Urgencia -->
+    <div class="legend">
+      <h4>Nivel de Urgencia</h4>
+      <div class="legend-item"><span class="color-box critico"></span> Crítico</div>
+      <div class="legend-item"><span class="color-box atrapado"></span> Atrapado</div>
+      <div class="legend-item"><span class="color-box general"></span> General</div>
+    </div>
+  </main>
+
+  <!-- Leaflet JS y Lógica de App -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
