@@ -5,8 +5,10 @@ const INITIAL_ZOOM = 14;
 // Inicializar el mapa de Leaflet
 const map = L.map('map').setView(INITIAL_COORDS, INITIAL_ZOOM);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; ResQ-Mesh Dashboard'
+// Servidor de Mapas Gratis y Sin API Key (Esri World Topo Map)
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), swisstopo, MapmyIndia, &copy; OpenStreetMap contributors',
+  maxZoom: 18
 }).addTo(map);
 
 const markers = {};
@@ -49,12 +51,12 @@ function renderAlerts(alerts) {
     } else {
       // Crear marcador por código de color
       const marker = L.circleMarker([lat, lng], {
-        radius: 10,
+        radius: 11,
         fillColor: color,
         color: '#ffffff',
         weight: 2,
         opacity: 1,
-        fillOpacity: 0.85
+        fillOpacity: 0.9
       }).addTo(map);
 
       marker.bindPopup(popupContent);
@@ -63,17 +65,47 @@ function renderAlerts(alerts) {
   });
 }
 
-// Consumo de la trama JSON
+// Tramas de prueba locales para evitar bloqueos de CORS al abrir directamente index.html
+const defaultAlerts = [
+  {
+    "id": "NODE-001",
+    "lat": 31.8625,
+    "lng": -116.6264,
+    "urgencia": "critico",
+    "bateria": 20,
+    "timestamp": "2026-10-06 23:30:00"
+  },
+  {
+    "id": "NODE-002",
+    "lat": 31.8655,
+    "lng": -116.6210,
+    "urgencia": "atrapado",
+    "bateria": 65,
+    "timestamp": "2026-10-06 23:28:15"
+  },
+  {
+    "id": "NODE-003",
+    "lat": 31.8590,
+    "lng": -116.6300,
+    "urgencia": "general",
+    "bateria": 90,
+    "timestamp": "2026-10-06 23:25:00"
+  }
+];
+
+// Cargar tramas JSON de prueba (con fallback local)
 async function fetchAlerts() {
   try {
     const response = await fetch('mock_data.json');
+    if (!response.ok) throw new Error('CORS o archivo no encontrado');
     const data = await response.json();
     renderAlerts(data);
   } catch (error) {
-    console.error('Error al leer las tramas JSON de prueba:', error);
+    // Si se abre directo con file:///, usa las tramas predeterminadas
+    renderAlerts(defaultAlerts);
   }
 }
 
-// Carga inicial y actualización automática (Polling)
+// Carga inicial y refresco dinámico
 fetchAlerts();
 setInterval(fetchAlerts, 5000);
